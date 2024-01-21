@@ -16,7 +16,7 @@ public:
         return dp[pos];
     }
     
-    int rob(vector<int>& nums) {
+    int rob0(vector<int>& nums) {
         if (nums.size() == 1) {
             return nums[0];
         }
@@ -25,16 +25,16 @@ public:
         return func(0, nums, dp);
     }
     
-    int rob0(vector<int>& nums) {
+    int rob(vector<int>& nums) {
         if (nums.size() == 1) {
             return nums[0];
         }
         
-        int v1 = nums[nums.size() - 2];
-        int v2 = nums.back();
+        int v1 = nums.back();
+        int v2 = 0;
         int v;
         
-        for (int i = (nums.size() - 3); i >= 0; --i) {
+        for (int i = (nums.size() - 2); i >= 0; --i) {
             v = std::max(nums[i] + v2, v1);
             v2 = v1;
             v1 = v;
