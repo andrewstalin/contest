@@ -3,7 +3,7 @@ public:
 
     
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
-        std::map<uint32_t, std::vector<std::string>> map;
+        std::unordered_map<uint32_t, std::vector<std::string>> map;
         std::vector<uint32_t> data(26, 0);
         
         for (int i = 0; i < strs.size(); ++i) {
