@@ -2,6 +2,7 @@ class Solution {
 public:
     inline std::vector<bool> to_binary(int val) {
         std::vector<bool> res;
+        res.reserve(11);
         
         while (val > 0) {
             res.emplace_back((val & 1) != 0 ? 1 : 0);
