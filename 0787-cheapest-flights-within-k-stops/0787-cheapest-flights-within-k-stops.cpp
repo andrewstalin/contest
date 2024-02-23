@@ -5,63 +5,54 @@ struct Flight {
     Flight(int dst, int price): dst(dst), price(price) {}
 };
 
+struct City {
+    std::vector<Flight> flights;
+    int price{ INT32_MAX };
+};
+
 struct Trip {
     int city;
-    int sum;
-    int hop;
+    int price;
+    int count;
     
-    Trip(int city, int sum, int hop): city(city), sum(sum), hop(hop) {}
+    Trip(int city, int price, int count): city(city), price(price), count(count) {}
 };
 
 class Solution {
-public:    
+public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+        std::vector<City> data(n, City());
         
-        std::vector<std::vector<Flight>> data(n, std::vector<Flight>());
         for (int i = 0; i < flights.size(); ++i) {
-            data[flights[i][0]].emplace_back(flights[i][1], flights[i][2]);
+            data[flights[i][0]].flights.emplace_back(flights[i][1], flights[i][2]);
         }
         
-        auto cmp = [](const Trip& t1, const Trip& t2){
-            return t1.sum > t2.sum;
-        };
-        std::priority_queue<Trip, std::vector<Trip>, decltype(cmp)> queue(cmp);
-        
-        std::vector<std::vector<int>> visited(n, std::vector<int>(k + 1, -1));
-        for (int i = 0; i <= k; ++i) {
-            visited[src][i] = 0;
-        }
-        
-        queue.emplace(src, 0, -1);
+        data[src].price = 0;
+        std::queue<Trip> queue;
+        queue.emplace(src, 0, 0);
         
         while (!queue.empty()) {
-            auto item = queue.top();
+            auto trip = queue.front();
             queue.pop();
             
-            if (item.city == dst && item.hop <= k) {
-                return item.sum;
-            }
-            
-            ++item.hop;
-            
-            if (item.hop > k) {
+            if (trip.count > k) {
                 continue;
             }
             
-            const auto& dst_flights = data[item.city];
-            
-            for (int i = 0; i < dst_flights.size(); ++i) {
-                int sum = data[item.city][i].price + item.sum;
+            for (int i = 0; i < data[trip.city].flights.size(); ++i) {
+                const auto& flight = data[trip.city].flights[i];
+                int price = trip.price + flight.price;
                 
-                if (visited[dst_flights[i].dst][item.hop] != -1 && visited[dst_flights[i].dst][item.hop] <= sum) {
-                    continue;
+                if (trip.count<= k && data[flight.dst].price > price) {
+                    data[flight.dst].price = price;
+                    
+                    if (trip.city != dst) {
+                        queue.emplace(flight.dst, price, trip.count + 1);
+                    }
                 }
-
-                visited[dst_flights[i].dst][item.hop] = sum;
-                queue.emplace(data[item.city][i].dst, data[item.city][i].price + item.sum, item.hop);
-            } 
+            }
         }
         
-        return -1;
+        return data[dst].price == INT32_MAX ? -1 : data[dst].price;
     }
 };
