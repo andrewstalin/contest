@@ -34,10 +34,6 @@ public:
             int time = meetings[index][2];
             int begin = index;
             
-            if (time == 16) {
-                int stop = 1;
-            }
-            
             while (index < meetings.size() && meetings[index][2] == time) {
                 data[meetings[index][0]].persons.emplace_back(meetings[index][1]);
                 data[meetings[index][1]].persons.emplace_back(meetings[index][0]);
