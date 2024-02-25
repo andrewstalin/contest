@@ -26,7 +26,7 @@ public:
         
         int index = 0;
         
-        std::vector<int> stack(2*n, 0);
+        std::vector<int> stack(n, 0);
         int stackp = -1;
         std::vector<bool> instack(n, false);
         
@@ -69,7 +69,7 @@ public:
                         stack[stackp] = data[p].persons[i];
                         res.emplace_back(data[p].persons[i]);
                     }
-                }
+                }                
             }
 
             if (index < meetings.size()) {
