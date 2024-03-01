@@ -3,11 +3,11 @@ public:
     bool isPossibleToSplit(vector<int>& nums) {
         std::vector<int> data(101, 0);
         
-        for (auto num : nums) {
+        for (const auto& num : nums) {
             ++data[num];
         }
         
-        for (auto val : data) {
+        for (const auto& val : data) {
             if (val > 2) {
                 return false;
             }
