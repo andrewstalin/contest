@@ -11,6 +11,28 @@
 class Solution {
 public:
     ListNode* frequenciesOfElements(ListNode* head) {
+        std::unordered_map<int, int> data;
+        
+        auto node{ head };
+        while (node != nullptr) {
+            ++data[node->val];
+            node = node->next;
+        }
+        
+        node = head;
+        ListNode* prev{ nullptr };
+        
+        for (auto it = data.begin(); it != data.end(); ++it) {
+            node->val = it->second;
+            prev = node;
+            node = node->next;
+        }
+        
+        prev->next = nullptr;
+        return head;
+    }
+    
+    ListNode* frequenciesOfElements0(ListNode* head) {
         std::vector<int> data(100001, 0);
         
         auto node{ head };
