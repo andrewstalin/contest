@@ -1,5 +1,6 @@
 class Solution {
 public:
+
     int minMeetingRooms(vector<vector<int>>& intervals) {
         
         std::sort(intervals.begin(), intervals.end(), [](const std::vector<int>& v1, const std::vector<int>& v2){
