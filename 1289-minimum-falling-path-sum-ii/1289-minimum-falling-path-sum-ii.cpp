@@ -1,32 +1,55 @@
+struct Item {
+    int min1;
+    int col1;
+    int min2;
+    int col2;
+
+    Item(int min1, int col1, int min2, int col2): min1(min1), col1(col1), min2(min2), col2(col2) {}
+};
+
 class Solution {
 public:
-    int minFallingPathSum(vector<vector<int>>& grid) {
-        std::vector<int> row = grid.back();
-        int n = grid.size();
+    inline Item find_min(const std::vector<int>& row, const Item& prev) {
+        int min1 = INT32_MAX;
+        int col1 = -1;
+
+        int min2 = INT32_MAX;
+        int col2 = -1;
         
-        for (int i = n - 2; i >= 0; --i) {
-            for (int j = 0; j < n; ++j) {
-                int min = INT32_MAX;
-                
-                for (int k = 0; k < n; ++k) {
-                    if (k == j) {
-                        continue;
-                    }
-                    
-                    min = std::min(min, grid[i][j] + row[k]);
-                }
-                
-                grid[i][j] = min;
+        int val;
+        
+        for (int i = 0; i < row.size(); ++i) {
+            if (i != prev.col1) {
+                val = prev.min1 + row[i];
+            } else {
+                val = prev.min2 + row[i];
             }
             
-            std::swap(row, grid[i]);
+            if (min1 >= val) {
+                min2 = min1;
+                col2 = col1;
+                min1 = val;
+                col1 = i;
+            } else if (min2 > val) {
+                col2 = i;
+                min2 = val;
+            } 
         }
         
-        int min = row[0];
-        for (int i = 1; i < n; ++i) {
-            min = std::min(min, row[i]);
+        return Item(min1, col1, min2, col2);
+    }
+    
+    int minFallingPathSum(vector<vector<int>>& grid) {
+        if (grid.size() == 1) {
+            return grid[0][0];
         }
         
-        return min;
+        Item item(0, -1, 0, -1);
+        
+        for (int i = (grid.size() - 1); i >= 0; --i) {
+            item = find_min(grid[i], item);
+        }
+        
+        return item.min1;
     }
 };
