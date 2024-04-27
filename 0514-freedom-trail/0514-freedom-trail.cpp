@@ -32,7 +32,6 @@ public:
             pos_right = ring_chars[index];
         }
         
-        //std::cout << "ring: " << ring_pos << ", key: " << key_pos << ", right: " << val_right << std::endl;
         val_right += func(key_pos + 1, pos_right, key, ring, ring_data, dp);
         
         int val_left = 0;
@@ -52,7 +51,6 @@ public:
             pos_left = ring_chars[index];
         }
         
-        //std::cout << "ring: " << ring_pos << ", key: " << key_pos << ", left: " << val_left << std::endl;
         val_left += func(key_pos + 1, pos_left, key, ring, ring_data, dp);
         
         dp[key_pos][ring_pos] = std::min(val_left, val_right) + 1;
