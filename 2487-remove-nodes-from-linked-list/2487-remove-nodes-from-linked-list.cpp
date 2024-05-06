@@ -11,7 +11,39 @@
 class Solution {
 public:
 
+    
+    ListNode* reverse(ListNode* node) {
+        ListNode* prev = nullptr;
+        
+        while (node != nullptr) {
+            auto tmp = node->next;
+            node->next = prev;
+            prev = node;
+            node = tmp;
+        }
+        
+        return prev;
+    }
+    
     ListNode* removeNodes(ListNode* head) {
+        head = reverse(head);
+        auto node = head->next;
+        auto prev = head;
+        
+        while (node != nullptr) {
+            if (node->val >= prev->val) {
+                prev->next = node;
+                prev = node;
+            }
+            
+            node = node->next;
+        }
+        
+        prev->next = nullptr;
+        return reverse(head);
+    }
+    
+    ListNode* removeNodes0(ListNode* head) {
         std::list<ListNode*> queue;
         auto node = head;
         
