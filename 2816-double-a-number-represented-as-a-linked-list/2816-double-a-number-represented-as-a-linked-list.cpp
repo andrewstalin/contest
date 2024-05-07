@@ -10,6 +10,31 @@
  */
 class Solution {
 public:
+    ListNode* doubleIt(ListNode* head) {
+        
+        auto node = head;
+        
+        if (head->val > 4) {
+            auto h = new ListNode(1);
+            h->next = head;
+            head = h;
+        }    
+
+        while (node != nullptr) {
+            node->val *= 2;
+                
+            if (node->next != nullptr && node->next->val > 4) {
+                ++node->val;
+            }
+            
+            node->val %= 10;
+            node = node->next;
+        }
+        
+        return head;
+    }
+    
+    
     inline ListNode* reverse(ListNode* node) {
         ListNode* prev = nullptr;
         ListNode* tmp;
@@ -24,7 +49,7 @@ public:
         return prev;
     }
     
-    ListNode* doubleIt(ListNode* head) {
+    ListNode* doubleIt2(ListNode* head) {
         head = reverse(head);
         
         ListNode* node = head;
