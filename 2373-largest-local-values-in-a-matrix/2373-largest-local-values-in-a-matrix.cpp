@@ -1,11 +1,13 @@
 class Solution {
 public:
     int get_max(int row, int col, const std::vector<std::vector<int>>& grid) {
-        int r1 = std::max(grid[row][col], std::max(grid[row][col + 1], grid[row][col + 2]));
+        int col2 = col + 1;
+        int col3 = col + 2;
+        int r1 = std::max(grid[row][col], std::max(grid[row][col2], grid[row][col3]));
         ++row;
-        int r2 = std::max(grid[row][col], std::max(grid[row][col + 1], grid[row][col + 2]));
+        int r2 = std::max(grid[row][col], std::max(grid[row][col2], grid[row][col3]));
         ++row;
-        int r3 = std::max(grid[row][col], std::max(grid[row][col + 1], grid[row][col + 2]));
+        int r3 = std::max(grid[row][col], std::max(grid[row][col2], grid[row][col3]));
         return std::max(r1, std::max(r2, r3));
     }
     
