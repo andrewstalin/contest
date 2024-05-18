@@ -12,10 +12,7 @@
 class Solution {
 public:
     int func(TreeNode* node, int& res) {
-        if (node->left == nullptr && node->right == nullptr) {
-            res += std::abs(node->val - 1);
-            return node->val - 1;
-        }
+
         
         int val = 0;
         
