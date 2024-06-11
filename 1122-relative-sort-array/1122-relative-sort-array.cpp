@@ -1,5 +1,6 @@
 class Solution {
 public:
+    
     vector<int> relativeSortArray(vector<int>& arr1, vector<int>& arr2) {
         std::vector<int> index(1001, INT32_MAX);
         for (int i = 0; i < arr2.size(); ++i) {
