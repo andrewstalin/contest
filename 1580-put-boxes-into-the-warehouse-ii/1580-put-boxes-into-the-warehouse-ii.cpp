@@ -1,6 +1,25 @@
 class Solution {
 public:
     int maxBoxesInWarehouse(vector<int>& boxes, vector<int>& warehouse) {
+        std::sort(boxes.begin(), boxes.end(), std::greater<int>());
+        int l = 0;
+        int r = warehouse.size() - 1;
+        int res = 0;
+        
+        for (size_t i = 0; i < boxes.size() && l <= r; ++i) {
+            if (warehouse[l] >= boxes[i]) {
+                ++l;
+                ++res;
+            } else if (warehouse[r] >= boxes[i]) {
+                --r;
+                ++res;
+            }
+        }
+        
+        return res;
+    }
+    
+    int maxBoxesInWarehouse0(vector<int>& boxes, vector<int>& warehouse) {
         std::vector<int> index(warehouse.size(), 0);
         std::iota(index.begin(), index.end(), 0);
         
